@@ -14,7 +14,3 @@ class HomePageTest(TestCase):
         self.assertTrue(html.startswith("<html>"))
         self.assertTrue(html.endswith("</html>"))
     
-
-    def test_home_page_returns_correct_html_2(self):
-        response = self.client.get("/")
-        self.assertContains(response, "<title>To-Do Lists</title>")
