@@ -1,5 +1,8 @@
 import unittest
+import time
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 
 class NewVisitorTest(unittest.TestCase):
@@ -12,19 +15,35 @@ class NewVisitorTest(unittest.TestCase):
 
 
     def test_can_start_a_todo_list(self):
+        # Lane has heard about a cool new online to-do app
+        # She goes to check out its homepage
+        self.browser.get("http://localhost:8000")
+    
         # She notices the page title and header mention to-do lists
-        assert "To-Do" in self.browser.title
+        self.assertIn("To-Do", self.browser.title)
+        header_text = self.browser.find_element(By.TAG_NAME, "h1").text
 
         # She is invited to enter a to-do item straight away
+        inputbox = self.browser.find_element(By.ID, "id_new_item")
+        self.assertEqual(inputbox.get_attribute("placeholder"), "Enter a to-do item")
 
-        # She types "reach englightment" into a text box
+        # She types "reach englightenment" into a text box
         # Lane's hobby is ascending past the spiritual plane
+        inputbox.send_keys("reach enlightenment")
 
         # When she hits enter, the page updates, and now the page lists
         # "1: Reach Enlightenment" as an item in a to-do list
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)
+
+        table = self.browser.find_element(By.ID, "id_list_table")
+        rows = table.find_elements(By.TAG_NAME, "tr")
+        self.assertTrue(any(row.text=="1: reach enlightenment" for row in rows))
 
         # There is still a text box inviting her to add another item
         # She enters "Escape from all Karmic debt" 
+        # Lane is very sly
+        self.fail("Finish the test!")
 
         # The page updates again, and now shows both items on her list
 
