@@ -1,0 +1,117 @@
+I actually really like computers, I think, if there was anything I was ever close to passionate about, it might be computers. A software engineer. It seems like software engineering
+is about creation in the digital space but the digital space is now so vast and deterministic that it is easy to get lost in the digital space, I feel like I want to do some kind of book
+reading every year. I think it is probably best to invest in my personal development and the development of the relationship with my people. Being able to solve those logical puzzles,
+I actually thing it is a good idea to have a routine where I got those done everyday. Walking 2 miles a day I think is also a good idea, hitting out 10k steps, like baking that into our day
+is probably a good idea for our longevity.
+
+The down fall of Wes Watson, he betrayed his own principals, the principal of sobriety, I think I am betraying this principle too. It is the alcohol that will be our undoing. Test Driven Development,
+Todd said that he does stuff in production all the time, including testing. I do as well but we can also have test code in production at the very least.
+
+Chapter 1: Getting Django Set Up Using a Functional Test
+(The Job Opportunities, I think will only become larger and more obvious for me. I want to be a sober but not a serious person.)
+
+Testing Goat (First Step of TDD is TESTING FIRST even before setting up your framework.)
+
+First Step in TDD is write a test
+
+First we write the test, then run it and see that is fails as expected. Note: Goats take one careful step at a time, which is why they seldom fall off of things. Slow is smooth and smooth is fast.
+
+Early on we ran into an issue getting the first test up and running and we had to set a variable for something called a Gecko Driver to the correct path because of the Snap package installer.
+Apparently, Ubuntu runs in a sandboxed environment.
+
+OUR WORKING DIRECTORY IS ALWAYS THE FILE THAT CONTAINS manage.py
+
+Tests that use Selenium let us drive a real web browser, so they really let us see how the application functions from the user's point of view. That's why they are called functional tests
+(aka end to end tests, system tests)
+
+The main point is that these test view how the whole application functions from an outside point of view. Other names are "black box" or closed box tests. Or even acceptance tests because
+this is about deciding what is acceptable to the user. Building a minimum viable product or MVP is something that is about Agile/TDD, Agile and TDD apparently go together. A minimum viable
+to-do list should allow the user to enter in some items and then remember them for their next visit.
+
+
+USEFUL TDD CONCEPTS
+
+User-Story
+
+  A description of how the application will work from the point of view of the user:
+  used to structure a functional test
+
+Expected Failure
+
+  When a test fails in the way we expected it to 
+
+
+  Starting a Python Project: 
+
+  django-admin startproject superlists . 
+
+  #this will create a file called manage.py in your current folder and a subfolder called "superlists" with more stuff inside of it. 
+
+  
+  Starting an App in a Django project: 
+
+  python manage.py startapp lists
+
+UNIT TESTS vs FUNCTIONAL TESTS
+
+   The basic distinction is that FT test the application from the outside, from the user's point of view. Unit tests on the other hand test the application from the inside, from the programmer's point of view. 
+
+
+
+TDD Workflow: 
+
+1. We start by writing a functional test, describing a typical example of our new functionality from the user's point of view. 
+2. Once we have an FT that fails, we start to think about how to write code that can get it to pass (or at least to get past its current failure). We now use one or more unit tests to define how we want our code to behave
+the idea is that each line of production code we write should be tested by (at least) one of our unit tests.
+3. Once we have a failing unit test to pass. We may iterate between steps 2 and 3 a few times, until we think the FT will get a little further
+4. Now we can rerun our FTs and see if they pass, or get a little further. That may prompt us to write some new unit tests, and some new code, and so on.
+5. Once we're comfortable that thec ore functionality works end-to-end, we can extend out to cover more permutations and edge cases, using just unit tests now. 
+
+  
+You can see that, all the way through, the FTs are driving what development we do from a high-level, while the unit tests drive what we do at a low level.
+
+The FT's don't aim to cover every single tiny detail of our app's behaviour; they are there to reassure us that everything is wired up correctly. The unit tests are there to exhaustively check all the lower-level details 
+and corner cases. 
+
+
+Functional Tests: 
+- One test per feature/user story
+- Tests from the user's point of view
+- Can test that the UI "really" works
+- Provides confidence that everything is wired together correctly
+and works end-to-end
+- Can warn about problems without telling you exactly what's wrong
+- Slow 
+
+Unit Tests: 
+- Many tests per feature
+- Tests the code (i.e, the programmer's point of view)
+- Tests the internals - individual functions or classes
+- Can exhaustively check permutations, details and edge cases
+- Can point at exactly where the problems is
+
+GIT: 
+
+After doing some stuff for a unit testing file we are committing things. 
+
+git status # shows us that the directory lists/ is untracked
+git add lists # this is how you add the directory
+git diff --staged # will show you the diff that you're about to commit
+git commit -m "Add app for lists, with deliberately failing unit test" 
+
+
+DJANGO: 
+
+As with any web server, Django's main job is is to decide what to do when a user asks for a particular URL on our site. Django's workflow goes something like this:
+1. An HTTP Request comes in for a particular URL
+2. Django uses some rules to decide which view function should deal with the request (referred to as resolving the URL)
+3. The view function processes the request and returns an HTTP response. 
+
+So, we want to test two things:
+1. Can we make this view function return the HTML we need?
+2. Can we tell Django to use this view function when we make a request for the root of the site? 
+
+URLS.py:
+
+Django uses this file to map view functions to URLs, this mapping is also called routing. There is a main urls.py for the whole site in the superlists folder. Let's go take a look:
+
